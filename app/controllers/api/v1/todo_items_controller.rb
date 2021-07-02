@@ -5,7 +5,13 @@ class Api::V1::TodoItemsController < ApplicationController
         @todo_items = current_user.todo_items.all
     end
     def show
-        handle_unauthorized
+        if authorized?
+            respond_to do |format|
+                format.json { render :show }
+            end
+        else
+            handle_unauthorized
+        end
     end
     def create
     end
@@ -26,5 +32,8 @@ class Api::V1::TodoItemsController < ApplicationController
                 format.json { render :unauthorized, status: 401 }
               end
             end
+        end
+        def todo_item_params
+            params.require(:todo_item).permit(:title, :complete)
         end
 end

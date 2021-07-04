@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import axios from "axios"
 import setAxiosHeaders from "./AxiosHeaders"
+import _ from "lodash"
 
 class TodoItem extends React.Component {
   constructor(props) {
@@ -17,23 +18,27 @@ class TodoItem extends React.Component {
     this.completedRef = React.createRef()
   }
   handleChange() {
+    this.setState({
+      complete: this.completedRef.current.checked
+    })
     this.updateTodoItem()
   }
-  updateTodoItem() {
-    this.setState({ complete: this.completedRef.current.checked })
-    setAxiosHeaders()
-    axios
-      .put(this.path, {
-        todo_item: {
-          title: this.inputRef.current.value,
-          complete: this.completedRef.current.checked
-        }
-      })
-      .then(response => {})
-      .catch(error => {
-        console.log(error)
-      });
-  }
+  updateTodoItem = _.debounce(() => {
+      this.setState({ complete: this.completedRef.current.checked })
+      setAxiosHeaders()
+      axios
+        .put(this.path, {
+          todo_item: {
+            title: this.inputRef.current.value,
+            complete: this.completedRef.current.checked
+          }
+        })
+        .then(response => {})
+        .catch(error => {
+          console.log(error)
+        });
+    }
+  ,1000)
   handleDestroy() {
     setAxiosHeaders()
     const confirmation = confirm("よろしいですか?")

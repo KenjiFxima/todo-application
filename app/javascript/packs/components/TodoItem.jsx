@@ -16,6 +16,7 @@ class TodoItem extends React.Component {
     this.updateTodoItem = this.updateTodoItem.bind(this)
     this.inputRef = React.createRef()
     this.completedRef = React.createRef()
+    this.myRef = React.createRef()
   }
   handleChange() {
     this.setState({
@@ -92,6 +93,7 @@ class TodoItem extends React.Component {
             className="form-control"
             id={`todoItem__title-${todoItem.id}`}
           />
+        <td><div ref={this.myRef} /></td>
         </td>
         <td className="text-right">
           <div className="form-check form-check-inline">
@@ -116,7 +118,7 @@ class TodoItem extends React.Component {
            className="btn btn-outline-danger"
            >
              削除
-             </button>
+             </button>  
         </td>
       </tr>
     )

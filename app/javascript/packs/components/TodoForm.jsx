@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import axios from 'axios'
+
 import setAxiosHeaders from "./AxiosHeaders"
 class TodoForm extends React.Component {
   constructor(props) {
@@ -23,9 +23,10 @@ class TodoForm extends React.Component {
       .then(response => {
         const todoItem = response.data
         this.props.createTodoItem(todoItem)
+        this.props.clearErrors()
       })
       .catch(error => {
-        console.log(error)
+        this.props.handleErrors(error)
       })
     e.target.reset()
   }
@@ -39,7 +40,7 @@ class TodoForm extends React.Component {
               type="text"
               name="title"
               ref={this.titleRef}
-              required
+              // required
               className="form-control"
               id="title"
               placeholder="ToDoを書き込んでください"
@@ -60,4 +61,6 @@ export default TodoForm
 
 TodoForm.propTypes = {
   createTodoItem: PropTypes.func.isRequired,
+  handleErrors: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired
 }

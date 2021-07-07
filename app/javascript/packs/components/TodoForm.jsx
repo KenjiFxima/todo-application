@@ -47,7 +47,7 @@ class TodoForm extends React.Component {
             />
           </div>
           <div className="form-group col-lg-2">
-              <button className="btn btn-outline-success btn-block">
+              <button className="btn btn-outline-primary btn-block">
                 ToDoを追加
               </button>
           </div>

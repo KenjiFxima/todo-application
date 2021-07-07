@@ -18,8 +18,8 @@ class TodoItems extends React.Component {
           onClick={this.handleClick}
         >
           {this.props.hideCompletedTodoItems
-            ? `Show Completed Items`
-            : `Hide Completed Items `}
+            ? `完了項目を表示`
+            : `完了項目を非表示`}
         </button>
         <div className="table-responsive">
           <table className="table">

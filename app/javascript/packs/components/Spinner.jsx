@@ -1,14 +1,13 @@
-// app/javascript/packs/components/Spinner.jsx
 import React from "react"
 
 const Spinner = () => {
   return (
     <div className="d-flex align-items-center justify-content-center py-5">
-      <div className="spinner-border" role="status">
-        <span className="sr-only">Loading...</span>
+      <div className="spinner-grow text-info" role="status">
+        <span className="sr-only"></span>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default Spinner

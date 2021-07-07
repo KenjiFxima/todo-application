@@ -10,7 +10,7 @@ class Api::V1::TodoItemsController < ApplicationController
                 format.json { render :show }
             end
         else
-            handle_unauthorized
+            check_unauthorized
         end
     end
     def create
@@ -24,7 +24,7 @@ class Api::V1::TodoItemsController < ApplicationController
             end
           end
         else
-          handle_unauthorized
+          check_unauthorized
         end
     end
     def update
@@ -37,7 +37,7 @@ class Api::V1::TodoItemsController < ApplicationController
           end
         end
       else
-        handle_unauthorized
+        check_unauthorized
       end
     end
     def destroy
@@ -47,7 +47,7 @@ class Api::V1::TodoItemsController < ApplicationController
           format.json { head :no_content }
         end
       else
-        handle_unauthorized
+        check_unauthorized
       end
     end
     private
@@ -57,8 +57,8 @@ class Api::V1::TodoItemsController < ApplicationController
         def authorized?
             @todo_item.user_id == current_user.id
         end
-        def handle_unauthorized
-            unless authorized?
+        def check_unauthorized
+            if !authorized?
               respond_to do |format|
                 format.json { render :unauthorized, status: 401 }
               end

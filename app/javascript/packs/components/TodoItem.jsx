@@ -4,7 +4,8 @@ import axios from "axios"
 import setAxiosHeaders from "./AxiosHeaders"
 import _ from "lodash"
 import { Icon, InlineIcon } from '@iconify/react'
-import checkCircle from '@iconify-icons/feather/check-circle'
+import okIcon from '@iconify-icons/cryptocurrency/ok'
+
 
 class TodoItem extends React.Component {
   constructor(props) {
@@ -49,7 +50,7 @@ class TodoItem extends React.Component {
       axios
         .delete(this.path)
         .then(response => {
-          this.props.getTodoItems()
+          this.props.getTodoItemList()
         })
         .catch(error => {
           console.log(error)
@@ -63,7 +64,7 @@ class TodoItem extends React.Component {
       className={`${ this.state.complete && this.props.hideCompletedTodoItems ? `d-none` : "" } ${this.state.complete ? "table-light" : ""}`}
       >
         <td>
-          <Icon icon={checkCircle} size={32} />
+          <Icon className={`${this.state.complete ? "text-success" : "text-light"}`} icon={okIcon} style={{ fontSize: `36px` }} />
         </td>
         <td>
           <input
@@ -75,7 +76,6 @@ class TodoItem extends React.Component {
             className="form-control"
             id={`todoItem__title-${todoItem.id}`}
           />
-        <td><div ref={this.myRef} /></td>
         </td>
         <td className="text-right">
           <div className="form-check form-check-inline">
@@ -111,6 +111,6 @@ export default TodoItem
 
 TodoItem.propTypes = {
   todoItem: PropTypes.object.isRequired,
-  getTodoItems: PropTypes.func.isRequired,
+  getTodoItemList: PropTypes.func.isRequired,
   hideCompletedTodoItems: PropTypes.bool.isRequired
 }

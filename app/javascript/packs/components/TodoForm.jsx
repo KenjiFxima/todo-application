@@ -43,10 +43,10 @@ class TodoForm extends React.Component {
               // required
               className="form-control"
               id="title"
-              placeholder="ToDoを書き込んでください"
+              placeholder="新しいToDoを書き込んでください"
             />
           </div>
-          <div className="form-group col-lg-2">
+          <div className="form-group col-md-4">
               <button className="btn btn-outline-primary btn-block">
                 ToDoを追加
               </button>

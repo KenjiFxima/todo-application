@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-class TodoItems extends React.Component {
+class TodoItemList extends React.Component {
   constructor(props) {
     super(props)
     this.handleClick = this.handleClick.bind(this)
@@ -14,7 +14,7 @@ class TodoItems extends React.Component {
       <>
         <hr/>
         <button
-          className="btn btn-outline-primary btn-block mb-3"
+          className={`btn ${this.props.hideCompletedTodoItems ? `btn` : `btn-outline`}-secondary`}
           onClick={this.handleClick}
         >
           {this.props.hideCompletedTodoItems
@@ -39,9 +39,9 @@ class TodoItems extends React.Component {
     )
   }
 }
-export default TodoItems
+export default TodoItemList
 
-TodoItems.propTypes = {
+TodoItemList.propTypes = {
   toggleCompletedTodoItems: PropTypes.func.isRequired,
   hideCompletedTodoItems: PropTypes.bool.isRequired,
 }

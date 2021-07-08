@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import axios from "axios"
 
-import TodoItems from "./TodoItems"
+import TodoItemList from "./TodoItemList"
 import TodoItem from "./TodoItem"
 import TodoForm from "./TodoForm"
 import Spinner from "./Spinner"
@@ -11,27 +11,27 @@ class TodoApp extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      todoItems: [],
+      todoItemList: [],
       hideCompletedTodoItems: false,
       isLoading: true,
       errorMessage: null
     }
-    this.getTodoItems = this.getTodoItems.bind(this)
+    this.getTodoItemList = this.getTodoItemList.bind(this)
     this.createTodoItem = this.createTodoItem.bind(this)
     this.toggleCompletedTodoItems = this.toggleCompletedTodoItems.bind(this)
     this.handleErrors = this.handleErrors.bind(this)
     this.clearErrors = this.clearErrors.bind(this)
   }
   componentDidMount() {
-    this.getTodoItems()
+    this.getTodoItemList()
   }
-  getTodoItems() {
+  getTodoItemList() {
     axios
       .get("/api/v1/todo_items")
       .then(response => {
         this.setState({ isLoading: true })
-        const todoItems = response.data
-        this.setState({ todoItems })
+        const todoItemList = response.data
+        this.setState({ todoItemList })
         this.setState({ isLoading: false })
       })
       .catch(error => {
@@ -40,8 +40,8 @@ class TodoApp extends React.Component {
       })
   }
   createTodoItem(todoItem) {
-    const todoItems = [todoItem, ...this.state.todoItems]
-    this.setState({ todoItems })
+    const todoItemList = [todoItem, ...this.state.todoItemList]
+    this.setState({ todoItemList })
   }
   toggleCompletedTodoItems() {
     console.log()
@@ -70,19 +70,19 @@ class TodoApp extends React.Component {
               handleErrors={this.handleErrors}
               clearErrors={this.clearErrors} 
             />
-            <TodoItems
+            <TodoItemList
               toggleCompletedTodoItems={this.toggleCompletedTodoItems}
               hideCompletedTodoItems={this.state.hideCompletedTodoItems}
             >
-              {this.state.todoItems.map(todoItem => (
+              {this.state.todoItemList.map(todoItem => (
                 <TodoItem 
                   key={todoItem.id} 
                   todoItem={todoItem} 
-                  getTodoItems={this.getTodoItems} 
+                  getTodoItemList={this.getTodoItemList} 
                   hideCompletedTodoItems={this.state.hideCompletedTodoItems}
                 />
               ))}
-            </TodoItems>
+            </TodoItemList>
           </>
         )}
         {this.state.isLoading && <Spinner />}

@@ -16,10 +16,7 @@ class ErrorMessage extends React.Component{
       return keys.map(key => {
         return (
           <div key={new Date()} className="alert alert-danger" role="alert">
-          <p>{key}</p>
-          <ul>
-              <li>{this.state.data[key].map(message => message)}</li>
-          </ul>
+          <p>{key}{this.state.data[key].map(message => message)}</p>
           </div>
         )
       })

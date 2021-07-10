@@ -7,20 +7,24 @@ class TodoItemList extends React.Component {
     this.handleClick = this.handleClick.bind(this)
   }
   handleClick() {
-    this.props.toggleCompletedTodoItems()
+    this.props.switchCompletedTodoItems()
   }
   render() {
     return (
       <>
         <hr/>
-        <button
-          className={`btn ${this.props.hideCompletedTodoItems ? `btn` : `btn-outline`}-secondary`}
-          onClick={this.handleClick}
-        >
-          {this.props.hideCompletedTodoItems
-            ? `完了項目を表示`
-            : `完了項目を非表示`}
-        </button>
+        <div className="form-check form-switch" onClick={this.handleClick}>
+          <input 
+            class="form-check-input" 
+            type="checkbox" 
+            id="switchCompletedItems"
+          ></input>
+          <label class="form-check-label" for="switchCompletedItems">
+            {this.props.hideCompletedTodoItems
+              ? `完了項目を非表示中`
+              : `完了項目を表示中`}
+          </label>
+        </div>
         <div className="table-responsive">
           <table className="table">
             <thead>
@@ -42,6 +46,6 @@ class TodoItemList extends React.Component {
 export default TodoItemList
 
 TodoItemList.propTypes = {
-  toggleCompletedTodoItems: PropTypes.func.isRequired,
+  switchCompletedTodoItems: PropTypes.func.isRequired,
   hideCompletedTodoItems: PropTypes.bool.isRequired,
 }

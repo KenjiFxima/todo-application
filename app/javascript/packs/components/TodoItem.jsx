@@ -13,13 +13,12 @@ class TodoItem extends React.Component {
     this.state = {
       complete: this.props.todoItem.complete,
     }
+    this.inputRef = React.createRef()
+    this.completedRef = React.createRef()
     this.handleDestroy = this.handleDestroy.bind(this)
     this.path = `/api/v1/todo_items/${this.props.todoItem.id}`
     this.handleChange = this.handleChange.bind(this)
     this.updateTodoItem = this.updateTodoItem.bind(this)
-    this.inputRef = React.createRef()
-    this.completedRef = React.createRef()
-    this.myRef = React.createRef()
   }
   handleChange() {
     this.setState({
@@ -37,23 +36,26 @@ class TodoItem extends React.Component {
             complete: this.completedRef.current.checked
           }
         })
-        .then(response => {})
+        .then(() => {
+          this.props.clearErrors()
+        })
         .catch(error => {
-          console.log(error)
-        });
+          this.props.handleErrors(error)
+        })
     }
-  ,1000)
+  ,500)
   handleDestroy() {
     setAxiosHeaders()
     const confirmation = confirm("よろしいですか?")
     if (confirmation) {
       axios
         .delete(this.path)
-        .then(response => {
+        .then(() => {
           this.props.getTodoItemList()
+          this.props.clearErrors()
         })
         .catch(error => {
-          console.log(error)
+          this.props.handleErrors(error)
         })
     }
   }
@@ -112,5 +114,6 @@ export default TodoItem
 TodoItem.propTypes = {
   todoItem: PropTypes.object.isRequired,
   getTodoItemList: PropTypes.func.isRequired,
-  hideCompletedTodoItems: PropTypes.bool.isRequired
+  hideCompletedTodoItems: PropTypes.bool.isRequired,
+  clearErrors: PropTypes.func.isRequired
 }

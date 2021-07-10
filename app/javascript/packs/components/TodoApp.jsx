@@ -18,7 +18,7 @@ class TodoApp extends React.Component {
     }
     this.getTodoItemList = this.getTodoItemList.bind(this)
     this.createTodoItem = this.createTodoItem.bind(this)
-    this.toggleCompletedTodoItems = this.toggleCompletedTodoItems.bind(this)
+    this.switchCompletedTodoItems = this.switchCompletedTodoItems.bind(this)
     this.handleErrors = this.handleErrors.bind(this)
     this.clearErrors = this.clearErrors.bind(this)
   }
@@ -29,21 +29,26 @@ class TodoApp extends React.Component {
     axios
       .get("/api/v1/todo_items")
       .then(response => {
+        this.clearErrors()
         this.setState({ isLoading: true })
         const todoItemList = response.data
         this.setState({ todoItemList })
         this.setState({ isLoading: false })
       })
-      .catch(error => {
+      .catch(() => {
         this.setState({ isLoading: true })
-        console.log(error)
+        this.setState({
+          errorMessage: {
+            message: "Todoリストの読み込みに失敗しました。"
+          }
+        })
       })
   }
   createTodoItem(todoItem) {
     const todoItemList = [todoItem, ...this.state.todoItemList]
     this.setState({ todoItemList })
   }
-  toggleCompletedTodoItems() {
+  switchCompletedTodoItems() {
     console.log()
     this.setState({
       hideCompletedTodoItems: !this.state.hideCompletedTodoItems
@@ -71,7 +76,7 @@ class TodoApp extends React.Component {
               clearErrors={this.clearErrors} 
             />
             <TodoItemList
-              toggleCompletedTodoItems={this.toggleCompletedTodoItems}
+              switchCompletedTodoItems={this.switchCompletedTodoItems}
               hideCompletedTodoItems={this.state.hideCompletedTodoItems}
             >
               {this.state.todoItemList.map(todoItem => (
@@ -80,6 +85,8 @@ class TodoApp extends React.Component {
                   todoItem={todoItem} 
                   getTodoItemList={this.getTodoItemList} 
                   hideCompletedTodoItems={this.state.hideCompletedTodoItems}
+                  handleErrors={this.handleErrors}
+                  clearErrors={this.clearErrors}
                 />
               ))}
             </TodoItemList>

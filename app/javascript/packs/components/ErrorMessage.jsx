@@ -7,7 +7,8 @@ class ErrorMessage extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      data: _.get(props.errorMessage, "response.data", null)
+      data: _.get(props.errorMessage, "response.data", null),
+      message: _.get(props.errorMessage, "message", null)
     }
   }
   render(){
@@ -20,7 +21,15 @@ class ErrorMessage extends React.Component{
           </div>
         )
       })
-    } else {
+    }
+    else if (message) {
+      return (
+        <div className="alert alert-danger" role="alert">
+          <p className="mb-0">{message}</p>
+        </div>
+      )
+    }
+    else {
       return (
           <div className="alert alert-danger" role="alert">
           <p className="mb-0">エラーが発生しました。</p>

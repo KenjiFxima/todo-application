@@ -13,13 +13,14 @@ class TodoItemList extends React.Component {
     return (
       <>
         <hr/>
-        <div className="form-check form-switch" onClick={this.handleClick}>
+        <div className="form-check form-switch">
           <input 
-            class="form-check-input" 
+            className="form-check-input" 
             type="checkbox" 
             id="switchCompletedItems"
+            onClick={this.handleClick}
           ></input>
-          <label class="form-check-label" for="switchCompletedItems">
+          <label className="form-check-label" htmlFor="switchCompletedItems">
             {this.props.hideCompletedTodoItems
               ? `完了項目を非表示中`
               : `完了項目を表示中`}

@@ -8,6 +8,7 @@ class TodoForm extends React.Component {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.titleRef = React.createRef()
+    this.deadlineRef = React.createRef()
   }
 
   handleSubmit(e) {
@@ -17,13 +18,14 @@ class TodoForm extends React.Component {
       .post('/api/v1/todo_items', {
         todo_item: {
           title: this.titleRef.current.value,
-          complete: false,
+          deadline: this.deadlineRef.current.value,
+          complete: false
         },
       })
       .then(response => {
         const todoItem = response.data
-        this.props.createTodoItem(todoItem)
         this.props.clearErrors()
+        this.props.createTodoItem(todoItem)
       })
       .catch(error => {
         this.props.handleErrors(error)
@@ -35,7 +37,7 @@ class TodoForm extends React.Component {
     return (
       <form onSubmit={this.handleSubmit} className="my-3">
         <div className="row">
-          <div className="form-group col-md-6">
+          <div className="form-group col-md-5">
             <input
               type="text"
               name="title"
@@ -46,8 +48,21 @@ class TodoForm extends React.Component {
               placeholder="新しいToDoを書き込んでください"
             />
           </div>
+          <div className="form-group col-md-3">
+                <label htmlFor="deadline"><h6>締め切り:</h6></label>
+                <span>
+                <input 
+                  type="date"
+                  name="deadline"
+                  ref={this.deadlineRef}
+                  className="form-control"
+                  id="deadline"
+                  date-provide="datepicker"
+                />
+                </span>
+          </div>
           <div className="form-group col-md-4">
-              <button className="btn btn-outline-primary btn-block">
+              <button className="btn btn-info btn-block">
                 ToDoを追加
               </button>
           </div>

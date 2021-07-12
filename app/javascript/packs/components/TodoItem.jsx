@@ -14,6 +14,7 @@ class TodoItem extends React.Component {
       complete: this.props.todoItem.complete,
     }
     this.inputRef = React.createRef()
+    this.deadlineRef = React.createRef()
     this.completedRef = React.createRef()
     this.handleDestroy = this.handleDestroy.bind(this)
     this.path = `/api/v1/todo_items/${this.props.todoItem.id}`
@@ -29,10 +30,12 @@ class TodoItem extends React.Component {
   updateTodoItem = _.debounce(() => {
       this.setState({ complete: this.completedRef.current.checked })
       setAxiosHeaders()
+      console.log(this.deadlineRef.current.value)
       axios
         .put(this.path, {
           todo_item: {
             title: this.inputRef.current.value,
+            deadline: this.deadlineRef.current.value,
             complete: this.completedRef.current.checked
           }
         })
@@ -61,6 +64,7 @@ class TodoItem extends React.Component {
   }
   render() {
     const { todoItem } = this.props
+    const dateRegex = /[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])/
     return (
       <tr
       className={`${ this.state.complete && this.props.hideCompletedTodoItems ? `d-none` : "" } ${this.state.complete ? "table-light" : "table-light"}`}
@@ -76,7 +80,18 @@ class TodoItem extends React.Component {
             onChange={this.handleChange}
             ref={this.inputRef}
             className="form-control"
-            id={`todoItem__title-${todoItem.id}`}
+            id={`todoItem_title-${todoItem.id}`}
+          />
+        </td>
+        <td className="text-right">
+          <input
+            type="date"
+            defaultValue = {todoItem.deadline.match(dateRegex)[0]}
+            disabled={this.state.complete}
+            onChange={this.handleChange}
+            ref={this.deadlineRef}
+            className="form-control"
+            id={`todoItem_deadline-${todoItem.id}`}
           />
         </td>
         <td className="text-right">

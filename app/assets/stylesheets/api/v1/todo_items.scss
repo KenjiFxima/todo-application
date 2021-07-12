@@ -11,3 +11,17 @@
     background-position: top center;
     overflow: auto;
 }
+
+label {
+    float: left;
+}
+
+span {
+    display: block;
+    overflow: hidden;
+    padding: 0 4px 0 6px;
+}
+
+input {
+    width: 100%
+}

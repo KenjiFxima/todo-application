@@ -32,6 +32,7 @@ class TodoItemList extends React.Component {
               <tr>
                 <th scope="col">状態</th>
                 <th scope="col">項目</th>
+                <th scope="col">締め切り</th>
                 <th scope="col" className="text-right">
                   チェック
                 </th>

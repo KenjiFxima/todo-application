@@ -19,9 +19,8 @@ class ErrorMessage extends React.Component{
           <div key={new Date()} className="alert alert-danger" role="alert">
           <p>{key}{this.state.data[key].map(message => message)}</p>
           </div>
-        )
-      })
-    }
+        )}
+      )}
     else if (message) {
       return (
         <div className="alert alert-danger" role="alert">

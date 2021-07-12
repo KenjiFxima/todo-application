@@ -48,8 +48,8 @@ class TodoForm extends React.Component {
               placeholder="新しいToDoを書き込んでください"
             />
           </div>
-          <div className="form-group col-md-3">
-                <label htmlFor="deadline"><h6>締め切り:</h6></label>
+          <div className="form-group col-md-4">
+                <label className="form" htmlFor="deadline"><h6>締め切り:</h6></label>
                 <span>
                 <input 
                   type="date"
@@ -61,7 +61,7 @@ class TodoForm extends React.Component {
                 />
                 </span>
           </div>
-          <div className="form-group col-md-4">
+          <div className="form-group col-md-3">
               <button className="btn btn-info btn-block">
                 ToDoを追加
               </button>

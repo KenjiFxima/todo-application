@@ -66,7 +66,9 @@ class TodoApp extends React.Component {
     return (
       <>
         {this.state.errorMessage && (
-          <ErrorMessage errorMessage={this.state.errorMessage} />
+          <ErrorMessage
+            errorMessage={this.state.errorMessage}
+          />
         )}
         {!this.state.isLoading && (
           <>

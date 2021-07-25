@@ -10,7 +10,6 @@ import okIcon from '@iconify-icons/cryptocurrency/ok'
 class TodoItem extends React.Component {
   constructor(props) {
     super(props)
-    console.log('TodoItem constructor' + JSON.stringify(this.props))
     this.state = {
       complete: this.props.todoItem.complete,
       signedIn: this.props.signedIn
@@ -54,8 +53,6 @@ class TodoItem extends React.Component {
           alert("項目が入力されていません。")
         }
         else{
-          console.log("CURRENT: ")
-          console.log(this.id)
           const id = this.id
           const todoItem = {
             id: id,
@@ -64,11 +61,7 @@ class TodoItem extends React.Component {
             complete: this.completedRef.current.checked
           }
           let todoItemList = JSON.parse(localStorage.getItem("todoItemList"))
-          console.log("todoItemList-local: ")
-          console.log(todoItemList)
-          console.log(todoItemList[id])
           todoItemList[id] = todoItem
-          console.log(todoItemList)
           localStorage.setItem("todoItemList", JSON.stringify(todoItemList))
         }
       }
@@ -91,19 +84,13 @@ class TodoItem extends React.Component {
         }
         else{
           let todoItemList = JSON.parse(localStorage.getItem("todoItemList"))
-          console.log("before:")
-          console.log(todoItemList)
           delete todoItemList[this.id]
-          console.log("after:")
-          console.log(todoItemList)
           localStorage.setItem("todoItemList", JSON.stringify(todoItemList))
           this.props.getTodoItemList()
         }
     }
   }
   render() {
-    console.log('In <TodoItem> props rendering: ' + JSON.stringify(this.props))
-
     const { todoItem } = this.props
     const dateRegex = /[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])/
     return (

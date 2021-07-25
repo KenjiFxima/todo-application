@@ -65,8 +65,6 @@ class TodoForm extends React.Component {
   }
   
   render() {
-    console.log("BOOLIAN!!: ")
-    console.log(this.state.errorFlag.title || this.state.errorFlag.deadline)
     return (
       <form onSubmit={this.handleSubmit} className="my-3">
         <div className="row">

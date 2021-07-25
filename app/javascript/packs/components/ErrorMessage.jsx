@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from "prop-types"
 import _ from "lodash"
-import { data } from 'jquery'
 
 class ErrorMessage extends React.Component{
   constructor(props){
@@ -21,10 +20,10 @@ class ErrorMessage extends React.Component{
           </div>
         )}
       )}
-    else if (message) {
+    else if (this.state.message) {
       return (
         <div className="alert alert-danger" role="alert">
-          <p className="mb-0">{message}</p>
+          <p className="mb-0">{this.state.message}</p>
         </div>
       )
     }

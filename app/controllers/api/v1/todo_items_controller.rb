@@ -1,8 +1,8 @@
 class Api::V1::TodoItemsController < ApplicationController
-    before_action :authenticate_user!
+    before_action :authenticate_user!, only: [:show, :edit, :update, :destroy]
     before_action :set_todo_item, only: [:show, :edit, :update, :destroy]
     def index
-        @todo_items = current_user.todo_items.all
+          @todo_items = current_user.todo_items.all
     end
     def show
         if authorized?
@@ -49,6 +49,9 @@ class Api::V1::TodoItemsController < ApplicationController
       else
         check_unauthorized
       end
+    end
+    def signed_in
+      @signed_in = user_signed_in?
     end
     private
         def set_todo_item

@@ -12,12 +12,14 @@ class TodoItem extends React.Component {
     super(props)
     this.state = {
       complete: this.props.todoItem.complete,
+      signedIn: this.props.signedIn
     }
     this.inputRef = React.createRef()
     this.deadlineRef = React.createRef()
     this.completedRef = React.createRef()
     this.handleDestroy = this.handleDestroy.bind(this)
     this.path = `/api/v1/todo_items/${this.props.todoItem.id}`
+    this.id = this.props.todoItem.id
     this.handleChange = this.handleChange.bind(this)
     this.updateTodoItem = this.updateTodoItem.bind(this)
   }
@@ -30,36 +32,62 @@ class TodoItem extends React.Component {
   updateTodoItem = _.debounce(() => {
       this.setState({ complete: this.completedRef.current.checked })
       setAxiosHeaders()
-      console.log(this.deadlineRef.current.value)
-      axios
-        .put(this.path, {
-          todo_item: {
+      if (this.state.signedIn){
+        axios
+          .put(this.path, {
+            todo_item: {
+              title: this.inputRef.current.value,
+              deadline: this.deadlineRef.current.value,
+              complete: this.completedRef.current.checked
+            }
+          })
+          .then(() => {
+            this.props.clearErrors()
+          })
+          .catch(error => {
+            this.props.handleErrors(error)
+          })
+        }
+      else{
+        if (this.inputRef.current.value.length == 0){
+          alert("項目が入力されていません。")
+        }
+        else{
+          const id = this.id
+          const todoItem = {
+            id: id,
             title: this.inputRef.current.value,
             deadline: this.deadlineRef.current.value,
             complete: this.completedRef.current.checked
           }
-        })
-        .then(() => {
-          this.props.clearErrors()
-        })
-        .catch(error => {
-          this.props.handleErrors(error)
-        })
+          let todoItemList = JSON.parse(localStorage.getItem("todoItemList"))
+          todoItemList[id] = todoItem
+          localStorage.setItem("todoItemList", JSON.stringify(todoItemList))
+        }
+      }
     }
-  ,500)
+  ,100)
   handleDestroy() {
     setAxiosHeaders()
     const confirmation = confirm("よろしいですか?")
     if (confirmation) {
-      axios
-        .delete(this.path)
-        .then(() => {
+      if(this.state.signedIn){
+        axios
+          .delete(this.path)
+          .then(() => {
+            this.props.getTodoItemList()
+            this.props.clearErrors()
+          })
+          .catch(error => {
+            this.props.handleErrors(error)
+          })
+        }
+        else{
+          let todoItemList = JSON.parse(localStorage.getItem("todoItemList"))
+          delete todoItemList[this.id]
+          localStorage.setItem("todoItemList", JSON.stringify(todoItemList))
           this.props.getTodoItemList()
-          this.props.clearErrors()
-        })
-        .catch(error => {
-          this.props.handleErrors(error)
-        })
+        }
     }
   }
   render() {
@@ -127,7 +155,9 @@ class TodoItem extends React.Component {
 export default TodoItem
 
 TodoItem.propTypes = {
+  signedIn: PropTypes.bool.isRequired,
   todoItem: PropTypes.object.isRequired,
+  todoItemList: PropTypes.array.isRequired,
   getTodoItemList: PropTypes.func.isRequired,
   hideCompletedTodoItems: PropTypes.bool.isRequired,
   clearErrors: PropTypes.func.isRequired

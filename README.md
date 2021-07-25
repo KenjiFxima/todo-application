@@ -6,6 +6,8 @@ http://3.130.131.223/
 ## 環境
 - Ruby 2.6.7
 - Ruby on Rails 6
+- React
+- BootStrap
 - AWS EC2(Amazon linux 2)
 - Mysql
 - unicorn

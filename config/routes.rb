@@ -6,7 +6,11 @@ Rails.application.routes.draw do
   root "pages#home"
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      resources :todo_items, only: [:index, :show, :create, :update, :destroy]
+      resources :todo_items, only: [:index, :show, :create, :update, :destroy] do
+        collection do
+          get 'signed_in', format: :json
+        end
+      end
     end
   end
 end

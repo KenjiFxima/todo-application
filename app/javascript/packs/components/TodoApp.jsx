@@ -24,6 +24,7 @@ class TodoApp extends React.Component {
     this.switchCompletedTodoItems = this.switchCompletedTodoItems.bind(this)
     this.handleErrors = this.handleErrors.bind(this)
     this.clearErrors = this.clearErrors.bind(this)
+    this.reflectChanges = this.reflectChanges.bind(this)
   }
   componentDidMount() {
     this.getTodoItemList()
@@ -109,12 +110,18 @@ async getTodoItemList() {
   handleErrors(errorMessage) {
     this.setState({ errorMessage })
   }
+  reflectChanges(todoItemList){
+    this.setState({ todoItemList })
+  }
   clearErrors() {
     this.setState({
       errorMessage: null
     })
   }
   render() {
+    console.log('todoItemList')
+    console.log(this.state.todoItemList)
+    console.log(Array.isArray(this.state.todoItemList))
     return (
       <>
         {this.state.errorMessage && (
@@ -143,6 +150,7 @@ async getTodoItemList() {
                   key={todoItem.id}
                   todoItem={todoItem}
                   getTodoItemList={this.getTodoItemList}
+                  reflectChanges={this.reflectChanges}
                   hideCompletedTodoItems={this.state.hideCompletedTodoItems}
                   handleErrors={this.handleErrors}
                   clearErrors={this.clearErrors}

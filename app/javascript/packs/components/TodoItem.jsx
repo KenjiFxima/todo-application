@@ -23,13 +23,11 @@ class TodoItem extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.updateTodoItem = this.updateTodoItem.bind(this)
   }
-  handleChange() {
-    this.setState({
-      complete: this.completedRef.current.checked
-    })
-    this.updateTodoItem()
+  async handleChange() {
+     this.updateTodoItem()
   }
-  updateTodoItem = _.debounce(() => {
+  updateTodoItem = 
+    _.debounce(() => {
       this.setState({ complete: this.completedRef.current.checked })
       setAxiosHeaders()
       if (this.state.signedIn){
@@ -61,8 +59,14 @@ class TodoItem extends React.Component {
             complete: this.completedRef.current.checked
           }
           let todoItemList = JSON.parse(localStorage.getItem("todoItemList"))
+          // localStorageではtodoItemListは辞書型で保存
           todoItemList[id] = todoItem
           localStorage.setItem("todoItemList", JSON.stringify(todoItemList))
+          console.log('In todoItem Component')
+          const todoItemListArray = _.values(todoItemList)
+          console.log(Array.isArray(todoItemListArray))
+          // this.setState({todoItemList: todoItemListArray})
+          this.props.reflectChanges(todoItemListArray)
         }
       }
     }
@@ -91,6 +95,7 @@ class TodoItem extends React.Component {
     }
   }
   render() {
+    console.log('RENDER')
     const { todoItem } = this.props
     const dateRegex = /[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])/
     return (
@@ -160,5 +165,6 @@ TodoItem.propTypes = {
   todoItemList: PropTypes.array.isRequired,
   getTodoItemList: PropTypes.func.isRequired,
   hideCompletedTodoItems: PropTypes.bool.isRequired,
-  clearErrors: PropTypes.func.isRequired
+  clearErrors: PropTypes.func.isRequired,
+  reflectChanges: PropTypes.func.isRequired
 }

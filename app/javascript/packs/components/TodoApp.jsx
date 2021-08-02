@@ -119,9 +119,6 @@ async getTodoItemList() {
     })
   }
   render() {
-    console.log('todoItemList')
-    console.log(this.state.todoItemList)
-    console.log(Array.isArray(this.state.todoItemList))
     return (
       <>
         {this.state.errorMessage && (

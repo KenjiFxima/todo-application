@@ -5,6 +5,7 @@ import setAxiosHeaders from "./AxiosHeaders"
 import _ from "lodash"
 import { Icon, InlineIcon } from '@iconify/react'
 import okIcon from '@iconify-icons/cryptocurrency/ok'
+import MediaQuery from "react-responsive"
 
 
 class TodoItem extends React.Component {
@@ -98,60 +99,126 @@ class TodoItem extends React.Component {
     const { todoItem } = this.props
     const dateRegex = /[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])/
     return (
-      <tr
-      className={`${ this.state.complete && this.props.hideCompletedTodoItems ? `d-none` : "" } ${this.state.complete ? "table-light" : "table-light"}`}
-      >
-        <td>
-          <Icon className={`${this.state.complete ? "text-success" : "text-light"}`} icon={okIcon} style={{ fontSize: `36px` }} />
-        </td>
-        <td>
-          <input
-            type="text"
-            defaultValue={todoItem.title}
-            disabled={this.state.complete}
-            onChange={this.handleChange}
-            ref={this.inputRef}
-            className="form-control"
-            id={`todoItem_title-${todoItem.id}`}
-          />
-        </td>
-        <td className="text-right">
-          <input
-            type="date"
-            defaultValue = {todoItem.deadline.match(dateRegex)[0]}
-            disabled={this.state.complete}
-            onChange={this.handleChange}
-            ref={this.deadlineRef}
-            className="form-control"
-            id={`todoItem_deadline-${todoItem.id}`}
-          />
-        </td>
-        <td className="text-right">
-          <div className="form-check form-check-inline">
-            <input
-              type="boolean"
-              defaultChecked={this.state.complete}
-              type="checkbox"
-              onChange={this.handleChange}
-              ref={this.completedRef}
-              className="form-check-input"
-              id={`complete-${todoItem.id}`}
-            />
-            <label
-              className="form-check-label"
-              htmlFor={`complete-${todoItem.id}`}
-            >
-              完了
-            </label>
-          </div>
-          <button
-           onClick={this.handleDestroy} 
-           className="btn btn-outline-danger"
-           >
-             削除
-             </button>  
-        </td>
-      </tr>
+      <>
+        <MediaQuery query="(max-width: 768px)">
+          <tr
+          className={`${ this.state.complete && this.props.hideCompletedTodoItems ? `d-none` : "" } ${this.state.complete ? "table-light" : "table-light"}`}
+          >
+            <td>
+            <Icon className={`${this.state.complete ? "text-success" : "text-light"}`} icon={okIcon} style={{ fontSize: `36px` }} />
+            </td>
+            <td>
+              <tr>
+                <td>
+                <input
+                  type="text"
+                  defaultValue={todoItem.title}
+                  disabled={this.state.complete}
+                  onChange={this.handleChange}
+                  ref={this.inputRef}
+                  className="form-control"
+                  id={`todoItem_title-${todoItem.id}`}
+                />
+                </td>
+              </tr>
+              <tr>
+                <td className="text-right">
+                  <input
+                    type="date"
+                    defaultValue = {todoItem.deadline.match(dateRegex)[0]}
+                    disabled={this.state.complete}
+                    onChange={this.handleChange}
+                    ref={this.deadlineRef}
+                    className="form-control"
+                    id={`todoItem_deadline-${todoItem.id}`}
+                  />
+                </td>
+              </tr>
+            </td>
+            <td className="text-right">
+              <div className="form-check form-check-inline">
+                <input
+                  type="boolean"
+                  defaultChecked={this.state.complete}
+                  type="checkbox"
+                  onChange={this.handleChange}
+                  ref={this.completedRef}
+                  className="form-check-input"
+                  id={`complete-${todoItem.id}`}
+                />
+                <label
+                  className="form-check-label"
+                  htmlFor={`complete-${todoItem.id}`}
+                >
+                  完了
+                </label>
+              </div>
+              <button
+              onClick={this.handleDestroy} 
+              className="btn btn-outline-danger"
+              >
+                削除
+                </button>  
+            </td>
+          </tr>
+        </MediaQuery>
+        <MediaQuery query="(min-width: 769px)">
+          <tr
+          className={`${ this.state.complete && this.props.hideCompletedTodoItems ? `d-none` : "" } ${this.state.complete ? "table-light" : "table-light"}`}
+          >
+            <td>
+              <Icon className={`${this.state.complete ? "text-success" : "text-light"}`} icon={okIcon} style={{ fontSize: `36px` }} />
+            </td>
+            <td>
+              <input
+                type="text"
+                defaultValue={todoItem.title}
+                disabled={this.state.complete}
+                onChange={this.handleChange}
+                ref={this.inputRef}
+                className="form-control"
+                id={`todoItem_title-${todoItem.id}`}
+              />
+            </td>
+            <td className="text-right">
+              <input
+                type="date"
+                defaultValue = {todoItem.deadline.match(dateRegex)[0]}
+                disabled={this.state.complete}
+                onChange={this.handleChange}
+                ref={this.deadlineRef}
+                className="form-control"
+                id={`todoItem_deadline-${todoItem.id}`}
+              />
+            </td>
+            <td className="text-right">
+              <div className="form-check form-check-inline">
+                <input
+                  type="boolean"
+                  defaultChecked={this.state.complete}
+                  type="checkbox"
+                  onChange={this.handleChange}
+                  ref={this.completedRef}
+                  className="form-check-input"
+                  id={`complete-${todoItem.id}`}
+                />
+                <label
+                  className="form-check-label"
+                  htmlFor={`complete-${todoItem.id}`}
+                >
+                  完了
+                </label>
+              </div>
+              <button
+              onClick={this.handleDestroy} 
+              className="btn btn-outline-danger"
+              >
+                削除
+                </button>  
+            </td>
+          </tr>
+        </MediaQuery>
+      </>  
     )
   }
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import MediaQuery from "react-responsive"
 
 class TodoItemList extends React.Component {
   constructor(props) {
@@ -31,8 +32,13 @@ class TodoItemList extends React.Component {
             <thead>
               <tr>
                 <th scope="col">状態</th>
-                <th scope="col">項目</th>
-                <th scope="col">締め切り</th>
+                <MediaQuery query="(max-width: 768px)">
+                  <th scope="col">ToDo</th>
+                </MediaQuery>
+                <MediaQuery query="(min-width: 769px)">
+                  <th scope="col">項目</th>
+                  <th scope="col">締め切り</th>
+                </MediaQuery>
                 <th scope="col" className="text-right">
                   チェック
                 </th>

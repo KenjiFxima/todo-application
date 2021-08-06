@@ -48,7 +48,9 @@ class TodoItem extends React.Component {
         }
       else{
         if (this.inputRef.current.value.length == 0){
-          alert("項目が入力されていません。")
+          this.props.handleErrors(
+            {message: "項目を入力してください。"}
+          )
         }
         else{
           const id = this.id
@@ -64,6 +66,7 @@ class TodoItem extends React.Component {
           localStorage.setItem("todoItemList", JSON.stringify(todoItemList))
           const todoItemListArray = _.values(todoItemList)
           this.props.reflectChanges(todoItemListArray)
+          this.props.clearErrors()
         }
       }
     }
@@ -161,6 +164,7 @@ TodoItem.propTypes = {
   todoItemList: PropTypes.array.isRequired,
   getTodoItemList: PropTypes.func.isRequired,
   hideCompletedTodoItems: PropTypes.bool.isRequired,
+  handleErrors: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   reflectChanges: PropTypes.func.isRequired
 }

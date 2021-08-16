@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users
-  authenticated :user do
-    root "pages#my_todo_items", as: :authenticated_root
-  end
   unauthenticated do
     root "pages#home"
+  end
+  authenticated :user do
+    root "pages#my_todo_items", as: :authenticated_root
   end
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
